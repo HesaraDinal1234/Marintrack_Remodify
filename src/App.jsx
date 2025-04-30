@@ -10,6 +10,7 @@ import HandleFisherman from './HandleFisherman';
 import AdminDashboard from './adminDashboard';
 import OfficerRegister from './officerRegister';
 import ManageOfficer from './manageOfficer';
+import OfficerProfileEdit from './officerProfileEdit';
 function App() {
   return (
     <Routes>
@@ -19,6 +20,7 @@ function App() {
       <Route path="/admindashboard" element={<AdminDashboard />} />
       <Route path="/officerregister" element={<OfficerRegister />} />
       <Route path="/manageofficer" element={<ManageOfficer />} />
+      <Route path="/officerprofileedit" element={<OfficerProfileEdit/>}/>
       <Route path="/BoatRegister" element={<BoatRegister />} />
       <Route path="/BoatOwnerDetails" element={<BoatOwnerDetails />} />
       <Route path="/HandleFisherman" element={<HandleFisherman />} />

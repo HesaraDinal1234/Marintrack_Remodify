@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import "bootstrap/dist/css/bootstrap.min.css";
 import profileImage from "./profile.png";
 import logoImage from "./logo.png";
 import backgroundImage from "./background.jpeg";
+import { Dropdown } from "react-bootstrap"; // Importing the Dropdown component
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -29,6 +30,18 @@ const Dashboard = () => {
 
     return () => unsubscribe();
   }, [navigate, location.state]);
+
+  // Logout function
+  const handleLogout = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        navigate('/'); // Redirect to login page after logout
+      })
+      .catch((error) => {
+        console.error("Error during logout:", error);
+      });
+  };
 
   const buttons = [
     { 
@@ -130,13 +143,24 @@ const Dashboard = () => {
                 <h6 className="mb-0">{userEmail}</h6>
                 <small className="text-muted">Online</small>
               </div>
-              <img 
-                src={profileImage} 
-                alt="User" 
-                width="50" 
-                height="50" 
-                className="rounded-circle border border-3 border-primary" 
-              />
+              <Dropdown align="end">
+                <Dropdown.Toggle 
+                  variant="link" 
+                  id="user-dropdown"
+                  className="d-flex align-items-center">
+                  <img 
+                    src={profileImage} 
+                    alt="User" 
+                    width="50" 
+                    height="50" 
+                    className="rounded-circle border border-3 border-primary" 
+                  />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => navigate('/officerprofileedit')}>Edit Profile</Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </div>
 
@@ -170,7 +194,7 @@ const Dashboard = () => {
 
           <div className="mt-4 pt-3 border-top text-center">
             <p className="text-muted mb-0 small">
-              Fisheries Management System • v2.1.0 • © 2025
+              Harbor Management System • v2.1.0 • © 2025
             </p>
           </div>
         </div>
